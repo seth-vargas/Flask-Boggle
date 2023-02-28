@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Boggle</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <section class="content">
-        <div class="board">
-            {% for row in board %}
-                <section class="row">
-                    {% for letter in row %}
-                    <p class="letter">{{ letter }}</p>
-                    {% endfor %}
-                </section>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="left container">
+        <h1 id="score">Score: 0</h1>
+      </div>
+      <div class="middle">
+        <h1 id="message">Lets play!</h1>
+        <section class="content">
+          <table class="board">
+            {% for row in session['board'] %}
+            <tr class="row">
+              {% for letter in row %}
+              <td class="letter">{{ letter }}</td>
+              {% endfor %}
+            </tr>
             {% endfor %}
-        </div>
-        <div class="guess">
-            <form action="/guess" method="post">
-                <label for="guess">Take a guess!</label><input type="text" name="guess">
-                <input type="submit" value="Submit">
+          </table>
+          <!-- Form for entering a new guess -->
+          <div class="guess-div container">
+            <form id="guess-form" action="/guess" method="POST">
+              <label for="guess">Take a guess!</label>
+              <input type="text" name="guess" id="guess"/>
+              <input type="submit" value="Submit"/>
             </form>
-        </div>
-    </section>
-</body>
+          </div>
+          <!-- EndForm -->
+        </section>
+      </div>
+      <div class="right container">
+        <h2 id="time">Time: 60</h2>
+      </div>
+    </div>
+    <!-- Library JS -->
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <!-- My JS -->
+    <script src="/static/app.js"></script>
+  </body>
 </html>

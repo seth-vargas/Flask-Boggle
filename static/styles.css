@@ -8,5 +8,24 @@
 .board {
     display: flex;
     justify-content: space-evenly;
-    width: 15em;
+}
+
+td {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+#message {
+    text-align: center;
 }
