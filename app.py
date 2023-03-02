@@ -1,34 +1,45 @@
 from flask import Flask, redirect, render_template, session, request
 from boggle import Boggle
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some secret"
 
-boggle_game = Boggle()
-b = Boggle()
-board = b.make_board()
+boggle = Boggle()
 
 @app.route('/')
+def setup_game():
+    if not 'times_played' in session:
+        session['times_played'] = 0
+        session['highscore'] = 0
+    return redirect('/game')
+
+@app.route('/game')
 def index():
-    session['board'] = board
+    session['board'] = boggle.make_board()
     return render_template('board.html')
+
 
 @app.route('/guess', methods=['POST'])
 def take_guess():
     session['guess'] = request.json.get('guess')
-    guess = b.check_valid_word(board, session['guess'])
+    guess = boggle.check_valid_word(session['board'], session['guess'])
     return {'result': guess}
 
-    # if guess == 'ok':
-    #     # word exists and is valid
-    #     # result = {'result': 'ok'}
-    #     result = 'ok'
 
-    # elif guess == "not-on-board":
-    #     # word exists but is not on board
-    #     # result = {'result': 'not on board'}
-    #     result = 'not on board'
-    # else:
-    #     # entry is not a word
-    #     # result = {'result': 'not a word'}
-    #     result = 'not a word'
+@app.route('/finished', methods=['POST'])
+def end_game():
+    """ Gets highscore and increments times played """
+    session['times_played'] += 1
+    newest_score = int(request.json.get('currentScore'))
+
+    session['highscore'] = newest_score if newest_score > session['highscore'] else session['highscore']
+    return {'highscore': session['highscore']}
+
+
+@app.route('/startGame')
+def start_game():
+    """ Starts game for user """
+    new_boggle = Boggle()
+    board = new_boggle.make_board()
+    return redirect('/game')

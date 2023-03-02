@@ -10,22 +10,43 @@
     justify-content: space-evenly;
 }
 
-td {
-    width: 3rem;
-    height: 3rem;
-    text-align: center;
-}
-
 .wrapper {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
 }
 
 .container {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    max-width: 50%;
+}
+
+#message, .center, td {
+    text-align: center;
 }
 
 #message {
-    text-align: center;
+    height: 80px;
+}
+
+.middle {
+    width: 50%
+}
+
+.form-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* Styling the board */
+td {
+    height: 5rem;
+    width: 5rem;
+
+    font-size: larger;
 }

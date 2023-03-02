@@ -13,8 +13,9 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="left container">
+      <div class="left container" id="scores">
         <h1 id="score">Score: 0</h1>
+        <h1 id="highscore">Highscore: {{ session['highscore'] }}</h1>
       </div>
       <div class="middle">
         <h1 id="message">Lets play!</h1>
@@ -29,14 +30,31 @@
             {% endfor %}
           </table>
           <!-- Form for entering a new guess -->
-          <div class="guess-div container">
+          <div>
             <form id="guess-form" action="/guess" method="POST">
-              <label for="guess">Take a guess!</label>
-              <input type="text" name="guess" id="guess"/>
-              <input type="submit" value="Submit"/>
+              <div class="form-div">
+                <label for="guess" class="center">Take a guess!</label>
+                <input type="text" name="guess" id="guess" />
+                <input type="submit" value="Submit" id="submit-guess" />
+              </div>
             </form>
           </div>
           <!-- EndForm -->
+          <!-- Form for creating a new game -->
+          <div>
+            <form action="/startGame" id="new-game-form">
+              <div class="form-div">
+                <label for="start-new-game">Start new game?</label>
+                <input type="submit" value="Start game!" id="submit-start" />
+              </div>
+            </form>
+          </div>
+          <!-- EndForm -->
+          <!-- guesses are stored here in a UL -->
+          <section class="container" id="guessed-words-container">
+            <h3>Guesses:</h3>
+            <ul id="guessed-words"></ul>
+          </section>
         </section>
       </div>
       <div class="right container">
