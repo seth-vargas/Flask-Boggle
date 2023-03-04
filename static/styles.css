@@ -5,7 +5,7 @@
     justify-content: center;
 }
 
-.board {
+.game {
     display: flex;
     justify-content: space-evenly;
 }
@@ -49,4 +49,27 @@ td {
     width: 5rem;
 
     font-size: larger;
+}
+
+/* Styling the guesses */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.not.on.board {
+    color: #c9b458
+}
+
+.not.a.word {
+    color: #787c7e
+}
+
+.ok {
+    color: #6aaa64
 }

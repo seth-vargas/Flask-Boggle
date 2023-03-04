@@ -32,9 +32,7 @@ async function getGuess(e) {
 
   const $guess = $("#guess").val().toLowerCase();
 
-  if (guesses.has($guess)) {
-    $message.text(`${$guess} has already been guessed!`);
-    $("#guess").val("");
+  if (!isValid($guess)) {
     return;
   }
 
@@ -51,10 +49,27 @@ async function getGuess(e) {
     score += points;
   }
   $message.text(`${$guess} is ${result}`);
-  const wordClass = result
+  const wordClass = result;
   updateUI(score, $guess, wordClass);
 }
 $guessForm.on("submit", getGuess);
+
+function isValid(guess) {
+  const isBlank = guess === "";
+  const isPlural = guess.includes(" ");
+  const hasBeenGuessed = guesses.has(guess);
+  console.log(isBlank, isPlural);
+  if (isBlank || isPlural) {
+    $message.text("Your guess cannot contain spaces");
+    $("#guess").val("");
+    return false;
+  } else if (hasBeenGuessed) {
+    $message.text(`${guess} has already been guessed!`);
+    $("#guess").val("");
+    return false;
+  }
+  return true
+}
 
 function startGame() {
   const intervalID = setInterval(() => {
@@ -69,7 +84,7 @@ function startGame() {
 function updateUI(score, guess, wordClass) {
   $("#guess").val("");
   $score.text(`Score: ${score}`);
-  $guessedWordsUl.append(`<li class="${wordClass}">${guess}</li>`);
+  $guessedWordsUl.append(`<li class="${wordClass} guess">${guess}\n</li>`);
 }
 
 function endGame() {
